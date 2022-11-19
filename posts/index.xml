@@ -1,22 +1,22 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>All Posts - alem1r blog</title>
-        <link>https://alem1r.github.io//posts/</link>
+        <link>https://alem1r.github.io/posts/</link>
         <description>All Posts | alem1r blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 18 Nov 2022 22:36:57 &#43;0000</lastBuildDate><atom:link href="https://alem1r.github.io//posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 18 Nov 2022 22:36:57 &#43;0000</lastBuildDate><atom:link href="https://alem1r.github.io/posts/" rel="self" type="application/rss+xml" /><item>
     <title>Unix</title>
-    <link>https://alem1r.github.io//posts/linux_kernel_internals/unix/</link>
+    <link>https://alem1r.github.io/posts/linux_kernel_internals/unix/</link>
     <pubDate>Fri, 18 Nov 2022 22:36:57 &#43;0000</pubDate>
     <author>Author</author>
-    <guid>https://alem1r.github.io//posts/linux_kernel_internals/unix/</guid>
+    <guid>https://alem1r.github.io/posts/linux_kernel_internals/unix/</guid>
     <description><![CDATA[UNIX]]></description>
 </item>
 <item>
     <title>Memory</title>
-    <link>https://alem1r.github.io//posts/linux_kernel_internals/memory/</link>
+    <link>https://alem1r.github.io/posts/linux_kernel_internals/memory/</link>
     <pubDate>Fri, 18 Nov 2022 22:11:37 &#43;0000</pubDate>
     <author>Author</author>
-    <guid>https://alem1r.github.io//posts/linux_kernel_internals/memory/</guid>
+    <guid>https://alem1r.github.io/posts/linux_kernel_internals/memory/</guid>
     <description><![CDATA[Linux Kernel - Memory]]></description>
 </item>
 </channel>
