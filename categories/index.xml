@@ -3,12 +3,12 @@
         <title>Categories - Category - alem1r blog</title>
         <link>https://alem1r.github.io/categories/</link>
         <description>Categories - Category - alem1r blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 18 Nov 2022 22:36:57 &#43;0000</lastBuildDate><atom:link href="https://alem1r.github.io/categories/" rel="self" type="application/rss+xml" /><item>
-    <title>Linux Kernel Internals</title>
-    <link>https://alem1r.github.io/categories/linux-kernel-internals/</link>
-    <pubDate>Fri, 18 Nov 2022 22:36:57 &#43;0000</pubDate>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 22 Nov 2022 22:08:48 &#43;0000</lastBuildDate><atom:link href="https://alem1r.github.io/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>x86-Assembly</title>
+    <link>https://alem1r.github.io/categories/x86-assembly/</link>
+    <pubDate>Tue, 22 Nov 2022 22:08:48 &#43;0000</pubDate>
     <author>Author</author>
-    <guid>https://alem1r.github.io/categories/linux-kernel-internals/</guid>
+    <guid>https://alem1r.github.io/categories/x86-assembly/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>
