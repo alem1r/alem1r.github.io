@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>ReverseEng - Category - My New Hugo Site</title>
+        <link>http://example.org/categories/reverseeng/</link>
+        <description>ReverseEng - Category - My New Hugo Site</description>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 23 Jul 2023 22:44:53 &#43;0200</lastBuildDate><atom:link href="http://example.org/categories/reverseeng/" rel="self" type="application/rss+xml" /><item>
+    <title>Third</title>
+    <link>http://example.org/posts/third/</link>
+    <pubDate>Sun, 23 Jul 2023 22:44:53 &#43;0200</pubDate>
+    <author>Author</author>
+    <guid>http://example.org/posts/third/</guid>
+    <description><![CDATA[]]></description>
+</item>
+</channel>
+</rss>

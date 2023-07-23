@@ -2,7 +2,13 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
+            <loc>http://example.org/categories/</loc><lastmod>2023-07-23T22:44:53&#43;02:00</lastmod></url><url>
+            <loc>http://example.org/</loc><lastmod>2023-07-23T22:44:53&#43;02:00</lastmod></url><url>
+            <loc>http://example.org/posts/</loc><lastmod>2023-07-23T22:44:53&#43;02:00</lastmod></url><url>
+            <loc>http://example.org/categories/reverseeng/</loc><lastmod>2023-07-23T22:44:53&#43;02:00</lastmod></url><url>
+            <loc>http://example.org/posts/third/</loc><lastmod>2023-07-23T22:44:53&#43;02:00</lastmod></url><url>
+            <loc>http://example.org/categories/hwsec/</loc><lastmod>2023-07-23T22:24:56&#43;02:00</lastmod></url><url>
+            <loc>http://example.org/posts/second/</loc><lastmod>2023-07-23T22:24:56&#43;02:00</lastmod></url><url>
+            <loc>http://example.org/posts/first/</loc><lastmod>2023-07-23T17:25:30&#43;02:00</lastmod></url><url>
             <loc>http://example.org/about/</loc><lastmod>2023-07-23T16:56:06&#43;02:00</lastmod></url><url>
-            <loc>http://example.org/categories/</loc></url><url>
-            <loc>http://example.org/</loc></url><url>
             <loc>http://example.org/tags/</loc></url></urlset>
