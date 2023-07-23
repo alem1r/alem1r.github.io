@@ -2,9 +2,7 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://alem1r.github.io/</loc><lastmod>2022-11-22T22:08:48&#43;00:00</lastmod></url><url>
-            <loc>https://alem1r.github.io/categories/</loc><lastmod>2022-11-22T22:08:48&#43;00:00</lastmod></url><url>
-            <loc>https://alem1r.github.io/posts/</loc><lastmod>2022-11-22T22:08:48&#43;00:00</lastmod></url><url>
-            <loc>https://alem1r.github.io/posts/x86-assembly/x86-assembly/</loc><lastmod>2022-11-22T22:08:48&#43;00:00</lastmod></url><url>
-            <loc>https://alem1r.github.io/categories/x86-assembly/</loc><lastmod>2022-11-22T22:08:48&#43;00:00</lastmod></url><url>
-            <loc>https://alem1r.github.io/about/</loc><lastmod>2022-11-18T21:23:29&#43;00:00</lastmod></url></urlset>
+            <loc>http://example.org/about/</loc><lastmod>2023-07-23T16:56:06&#43;02:00</lastmod></url><url>
+            <loc>http://example.org/categories/</loc></url><url>
+            <loc>http://example.org/</loc></url><url>
+            <loc>http://example.org/tags/</loc></url></urlset>
