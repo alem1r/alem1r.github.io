@@ -1,7 +1,6 @@
 {
   "htmlElements": {
     "tags": [
-      "?xml",
       "a",
       "article",
       "aside",
@@ -38,7 +37,6 @@
       "path",
       "polygon",
       "pre",
-      "rect",
       "script",
       "section",
       "source",
@@ -433,9 +431,6 @@
       "shadow-md",
       "shrink-0",
       "sidebar-active-item",
-      "size-1",
-      "size-6",
-      "size-7",
       "skills-content",
       "skills-icon",
       "skills-name",
@@ -515,12 +510,10 @@
       "z-30"
     ],
     "ids": [
-      "Capa_1",
       "Layer_1",
       "SVGRepo_bgCarrier",
       "SVGRepo_iconCarrier",
       "SVGRepo_tracerCarrier",
-      "XMLID_188_",
       "about-me",
       "code",
       "did-you-find-this-page-helpful-consider-sharing-it-",
