@@ -2,14 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags | Alessandro Miragliotta</title>
-    <link>%20/tags/</link>
-      <atom:link href="%20/tags/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://alem1r.github.io/public/tags/</link>
+      <atom:link href="https://alem1r.github.io/public/tags/index.xml" rel="self" type="application/rss+xml" />
     <description>Tags</description>
     <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Tue, 24 Oct 2023 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>%20/media/icon_hu_ade5c0ec4514365e.png</url>
+      <url>https://alem1r.github.io/public/media/icon_hu_ade5c0ec4514365e.png</url>
       <title>Tags</title>
-      <link>%20/tags/</link>
+      <link>https://alem1r.github.io/public/tags/</link>
     </image>
     
   </channel>

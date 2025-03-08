@@ -2,87 +2,87 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>%20/event/example/</loc>
+    <loc>https://alem1r.github.io/public/event/example/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/event/</loc>
+    <loc>https://alem1r.github.io/public/event/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/news/misc/</loc>
+    <loc>https://alem1r.github.io/public/news/misc/</loc>
     <lastmod>2025-03-08T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/news/</loc>
+    <loc>https://alem1r.github.io/public/news/</loc>
     <lastmod>2025-03-08T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/projects/</loc>
+    <loc>https://alem1r.github.io/public/projects/</loc>
     <lastmod>2024-05-19T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/post/teach-courses/</loc>
+    <loc>https://alem1r.github.io/public/post/teach-courses/</loc>
     <lastmod>2023-10-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/post/</loc>
+    <loc>https://alem1r.github.io/public/post/</loc>
     <lastmod>2023-10-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/tags/computer-architecture/</loc>
+    <loc>https://alem1r.github.io/public/tags/computer-architecture/</loc>
     <lastmod>2023-10-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/experience/</loc>
+    <loc>https://alem1r.github.io/public/experience/</loc>
     <lastmod>2023-10-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/tags/</loc>
+    <loc>https://alem1r.github.io/public/tags/</loc>
     <lastmod>2023-10-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/</loc>
+    <loc>https://alem1r.github.io/public/</loc>
     <lastmod>2022-10-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/publication/preprint/</loc>
+    <loc>https://alem1r.github.io/public/publication/preprint/</loc>
     <lastmod>2019-04-07T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/publication_types/article/</loc>
+    <loc>https://alem1r.github.io/public/publication_types/article/</loc>
     <lastmod>2019-04-07T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/tags/large-language-models/</loc>
+    <loc>https://alem1r.github.io/public/tags/large-language-models/</loc>
     <lastmod>2019-04-07T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/publication_types/</loc>
+    <loc>https://alem1r.github.io/public/publication_types/</loc>
     <lastmod>2019-04-07T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/publication/</loc>
+    <loc>https://alem1r.github.io/public/publication/</loc>
     <lastmod>2019-04-07T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/publication/journal-article/</loc>
+    <loc>https://alem1r.github.io/public/publication/journal-article/</loc>
     <lastmod>2015-09-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/publication_types/article-journal/</loc>
+    <loc>https://alem1r.github.io/public/publication_types/article-journal/</loc>
     <lastmod>2015-09-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/tags/source-themes/</loc>
+    <loc>https://alem1r.github.io/public/tags/source-themes/</loc>
     <lastmod>2015-09-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/publication/conference-paper/</loc>
+    <loc>https://alem1r.github.io/public/publication/conference-paper/</loc>
     <lastmod>2013-07-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>%20/publication_types/paper-conference/</loc>
+    <loc>https://alem1r.github.io/public/publication_types/paper-conference/</loc>
     <lastmod>2013-07-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url>
