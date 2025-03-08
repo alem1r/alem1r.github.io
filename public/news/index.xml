@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>News | Alessandro Miragliotta</title>
-    <link>https://alem1r.github.io/news/</link>
-      <atom:link href="https://alem1r.github.io/news/index.xml" rel="self" type="application/rss+xml" />
+    <link>%20/news/</link>
+      <atom:link href="%20/news/index.xml" rel="self" type="application/rss+xml" />
     <description>News</description>
     <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Sat, 08 Mar 2025 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>https://alem1r.github.io/media/icon_hu_ade5c0ec4514365e.png</url>
+      <url>%20/media/icon_hu_ade5c0ec4514365e.png</url>
       <title>News</title>
-      <link>https://alem1r.github.io/news/</link>
+      <link>%20/news/</link>
     </image>
     
     <item>
       <title>About</title>
-      <link>https://alem1r.github.io/news/misc/</link>
+      <link>%20/news/misc/</link>
       <pubDate>Sat, 08 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>https://alem1r.github.io/news/misc/</guid>
+      <guid>%20/news/misc/</guid>
       <description>&lt;p&gt;News number 1 News number 1News number 1News number 1News number 1News number 1News number 1News number 1News number 1News number 1News number 1News number 1&lt;/p&gt;
 </description>
     </item>
