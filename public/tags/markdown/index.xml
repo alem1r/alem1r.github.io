@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Markdown | Alessandro Miragliotta</title>
+    <link>http://localhost:35631/tags/markdown/</link>
+      <atom:link href="http://localhost:35631/tags/markdown/index.xml" rel="self" type="application/rss+xml" />
+    <description>Markdown</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language>
+    <image>
+      <url>http://localhost:35631/media/icon_hu_ade5c0ec4514365e.png</url>
+      <title>Markdown</title>
+      <link>http://localhost:35631/tags/markdown/</link>
+    </image>
+    
+  </channel>
+</rss>
