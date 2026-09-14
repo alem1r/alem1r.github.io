@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on alem1r</title>
+    <link>https://alem1r.github.io/categories/</link>
+    <description>Recent content in Categories on alem1r</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 14 Sep 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://alem1r.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C Language</title>
+      <link>https://alem1r.github.io/categories/c-language/</link>
+      <pubDate>Mon, 14 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://alem1r.github.io/categories/c-language/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

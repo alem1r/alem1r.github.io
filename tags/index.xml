@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on alem1r</title>
+    <link>https://alem1r.github.io/tags/</link>
+    <description>Recent content in Tags on alem1r</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 14 Sep 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://alem1r.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C</title>
+      <link>https://alem1r.github.io/tags/c/</link>
+      <pubDate>Mon, 14 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://alem1r.github.io/tags/c/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Memory</title>
+      <link>https://alem1r.github.io/tags/memory/</link>
+      <pubDate>Mon, 14 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://alem1r.github.io/tags/memory/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

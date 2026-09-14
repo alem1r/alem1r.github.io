@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>All Posts - alem1r</title>
+        <link>https://alem1r.github.io/posts/</link>
+        <description>All Posts | alem1r</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 14 Sep 2026 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://alem1r.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>What C Actually Does With Your Struct - Padding, Alignment and Memory Layout</title>
+    <link>https://alem1r.github.io/c-structs/</link>
+    <pubDate>Mon, 14 Sep 2026 00:00:00 &#43;0000</pubDate>
+    <author>Alessandro Miragliotta</author>
+    <guid>https://alem1r.github.io/c-structs/</guid>
+    <description><![CDATA[]]></description>
+</item>
+</channel>
+</rss>
