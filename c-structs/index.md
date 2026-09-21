@@ -1,3 +1,391 @@
 # What C Actually Does With Your Struct - Padding, Alignment and Memory Layout
 
 
+Many computer systems put *alignment restrictions* to simplify the design of the hardware between the processor and the memory. Such restrictions require that the address for some objects must be a multiple of some value *V* (typically 2,4, or 8). For example, suppose a processor always fetches 8 bytes from memory with an address that must be a multiple of 8. If we can guarantee that any **double** will be aligned to have its address be a multiple of 8, then the value can be read or written with a single memory operation. Otherwise, we may need to perform two memory accesses, since the object might be split across two 8-byte memory blocks and that impacts performances.
+
+## Data Alignment in Memory
+
+Every data type has a natural alignment requirement that depends on the processor architecture.
+
+For example, the following picture describes the bytes needed for each data type on most systems. It also shows that a pointer (in this case of type char) uses the full word size of the program.
+
+
+![alt text](data_types.png)
+
+### Aligned vs Misaligned access
+
+#### Aligned
+
+Suppose we want to store the 32-bit value:
+
+`0xDEADBEEF`
+
+A 32-bit value occupies 4 bytes. On a typical little-endian ARM/x86 system, memory contains:
+
+```bash
+Value: 0xDEADBEEF
+
+Bytes:
+EF BE AD DE
+```
+
+For a 32-bit (uint32_t) access, an address is naturally aligned when it is divisible by 4.
+
+For example, address **0x1000**:
+
+
+```c
+Address     Content
+0x1000      EF  ← start
+0x1001      BE
+0x1002      AD
+0x1003      DE
+
+uint32_t *p = (uint32_t *)0x1000;
+
+*p → 0xDEADBEEF
+```
+
+Since:
+
+```bash
+0x1000 % 4 = 0
+```
+the access is **4-byte aligned**.
+
+
+
+#### Misaligned
+
+Now imagine the same value starts at **0x1001**:
+```c
+Address     Content
+0x1000      ??
+0x1001      EF  ← start
+0x1002      BE
+0x1003      AD
+0x1004      DE
+
+uint32_t *p = (uint32_t *)0x1001;
+
+*p → 0xDEADBEEF   // if the CPU permits unaligned access
+```
+But:
+
+```bash
+0x1001 % 4 = 1
+```
+so the 32-bit access is misaligned and what happens in memory is the following:
+
+```bash
+             natural word #1         natural word #2
+          ┌────────────────────┐  ┌────────────────────┐
+Address   1000  1001  1002  1003  1004  1005  1006  1007
+          ??    EF    BE    AD    DE    ??    ??    ??
+                └─────────────────────┘
+                  requested uint32_t
+```
+
+On some CPUs, misaligned accesses work but may be slower; on others—or for certain ARM instructions/device-memory regions—they can generate an alignment fault/data abort.
+
+
+
+## Structs and Padding
+
+Let's consider the following struct. Now, we are going to determine the offset of each field, the total size of the structure and its alignment for x86-64: 
+
+```c
+struct S1 {
+
+  short i; 
+  int c; 
+  int *j; 
+  short *d;
+
+  };
+```
+
+Suppose the compiler used the minimal byte allocation, diagrammed as follows:
+
+![alt text](wrong-offset.png)
+
+Then it would be impossible to satisfy the 4-byte alignment requirement for field **c** (offset 2). Instead, the compiler inserts a 2-byte gap (shown here as *padding*) between fields i and c.
+
+![alt text](right-offset.png)
+
+So, Padding is the process of inserting unused bytes between members or at the end of a structure to satisfy alignment requirements.
+
+Without padding, some members would begin at misaligned addresses, reducing memory access efficiency.
+
+Indeed, if we run the following C program,
+
+
+```c
+int main(){
+
+printf("The size of is %ld\n",sizeof(struct S1));
+
+printf("The alignment is %ld\n",alignof(struct S1));
+printf("The offset of i is %ld\n",offsetof(struct S1, i));
+printf("The offset of c is %ld\n",offsetof(struct S1, c));
+printf("The offset of j is %ld\n",offsetof(struct S1, j));
+printf("The offset of d is %ld\n",offsetof(struct S1, d));
+
+
+return 0;
+
+}
+```
+
+we obtain:
+
+```bash
+The size of is 24
+The alignment is 8
+The offset of i is 0
+The offset of c is 4
+The offset of j is 8
+The offset of d is 16
+
+```
+
+This is consistent because the total size is 24 bytes (where pointer d finishes) and the alignment of the struct is 8 because the *max(alignment_members) = 8*, the pointers.
+
+### Padding - Rule of Thumb
+
+A simple algorithm that shows when inserting the padding is the following:
+
+```bash
+current_offset = 0 
+
+for each member: 
+  look at member alignment 
+  if current offset is not divisible by alignment: 
+    add padding until is 
+  place member 
+  current_offset += member size
+
+after all members:
+  pad total size untile divisible by struct alignment
+```
+
+Execution on Struct S1:
+
+1. Start
+
+```bash
+current_offset = 0 
+```
+2. Member **short i**
+
+Alignment = 2
+Check: 
+```bash
+0 % 2 = 0 
+```
+So no padding.
+```bash
+offset 0-1 : i
+```
+Update:
+```bash
+current_offset = 0 + 2 = 2
+```
+
+3. Member **int c**
+
+Alignment = 4
+
+Current offset:
+
+
+```bash
+current_offset = 2
+```
+Check: 
+```bash
+2 % 4 != 0 
+```
+So add padding until the offset is divisible by 4:
+```bash
+offset 2 : padding
+offset 3 : padding
+```
+Now
+
+```bash
+current_offset = 4
+4 % 4 = 0
+```
+Place **c** at offset 4.
+**int** occupies 4 bytes:
+```bash
+offset 4-7 : c
+```
+Update:
+```bash
+current_offset = 4 + 4 = 8
+```
+
+4. Member **`int *j`**
+
+Pointer alignment = 8
+
+Current offset:
+
+
+```bash
+current_offset = 8
+```
+
+Check: 
+```bash
+8 % 8 = 0 
+```
+So no padding.
+Place **j** at offset 8.
+Pointer occupies 8 bytes:
+```bash
+offset 8-15 : j
+```
+Update:
+```bash
+current_offset = 8 + 8 = 16
+```
+
+5. Member **`short *d`**
+
+Pointer alignment = 8
+
+Current offset:
+
+
+```bash
+current_offset = 16
+```
+
+Check: 
+```bash
+16 % 8 = 0 
+```
+So no padding.
+Place **d** at offset 16.
+Pointer occupies 8 bytes:
+```bash
+offset 16-23 : j
+```
+Update:
+```bash
+current_offset = 16 + 8 = 24
+```
+
+### Assembly and Memory Layout
+
+Life can be easier if we let the compiler handle it for us, in particular by using **Clang** we can see directly the layout:
+
+```bash
+clang -Xclang -fdump-record-layouts -c layout.c
+```
+```bash
+*** Dumping AST Record Layout
+         0 | struct P1
+         0 |   short i
+         4 |   int c
+         8 |   int * j
+        16 |   short * d
+           | [sizeof=24, align=8]
+```
+
+Exactly what we previously computed!
+
+If we look to the assembly we can have a deeper understanding:
+
+```bash
+gcc -O2 -S -masm=intel layout.c -o layout.s
+
+```
+
+```assembly
+	.intel_syntax noprefix
+	.text
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC0:
+	.string	"size of is %ld\n"
+.LC1:
+	.string	"the alignment is %ld\n"
+.LC2:
+	.string	"the offset of i is %ld\n"
+.LC3:
+	.string	"the offset of c is %ld\n"
+.LC4:
+	.string	"the offset of j is %ld\n"
+.LC5:
+	.string	"the offset of d is %ld\n"
+	.section	.text.startup,"ax",@progbits
+	.p2align 4
+	.globl	main
+	.type	main, @function
+main:
+.LFB39:
+	.cfi_startproc
+	endbr64
+	sub	rsp, 8
+	.cfi_def_cfa_offset 16
+	mov	edx, 24
+	mov	edi, 1
+	xor	eax, eax
+	lea	rsi, .LC0[rip]
+	call	__printf_chk@PLT
+	mov	edx, 8
+	lea	rsi, .LC1[rip]
+	xor	eax, eax
+	mov	edi, 1
+	call	__printf_chk@PLT
+	xor	edx, edx
+	lea	rsi, .LC2[rip]          //offset of i is 0
+	xor	eax, eax
+	mov	edi, 1
+	call	__printf_chk@PLT
+	mov	edx, 4
+	lea	rsi, .LC3[rip]         //offset of c is 4
+	xor	eax, eax
+	mov	edi, 1
+	call	__printf_chk@PLT
+	mov	edx, 8
+	lea	rsi, .LC4[rip]         //offset of j is 8
+	xor	eax, eax
+	mov	edi, 1
+	call	__printf_chk@PLT
+	mov	edx, 16
+	lea	rsi, .LC5[rip]         //offset of d is 16
+	xor	eax, eax
+	mov	edi, 1
+	call	__printf_chk@PLT
+	xor	eax, eax
+	add	rsp, 8
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE39:
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0"
+	.section	.note.GNU-stack,"",@progbits
+	.section	.note.gnu.property,"a"
+	.align 8
+	.long	1f - 0f
+	.long	4f - 1f
+	.long	5
+0:
+	.string	"GNU"
+1:
+	.align 8
+	.long	0xc0000002
+	.long	3f - 2f
+2:
+	.long	0x3
+3:
+	.align 8
+4:
+```
+
+In the generated assembly, the structure layout can be identified by matching each **lea** instruction, which loads the corresponding format string, with the preceding **mov** instruction, which places the compile-time value of **sizeof**, **_Alignof**, or **offsetof** into the argument register. For example, **mov edx, 4** followed by **lea rsi, .LC3[rip]** shows that the offset of member **c** is 4 bytes. Similarly, **mov edx, 8** before the alignment message shows that the structure alignment is **8 bytes**.

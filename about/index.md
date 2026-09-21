@@ -12,7 +12,7 @@ I use this website to:
 - document side projects and experiments,
 - share notes that might be useful to others working close to the hardware–software boundary.
 
-Outside of work, I enjoy running (I completed an half marathon in March 2026 - aiming to the second in October) and I love NBA Basketball, big Lakers fan.
+Outside of work, I enjoy running and I love NBA Basketball, big Lakers fan.
 
 If you’d like to get in touch, feel free to reach out via the links below.
 

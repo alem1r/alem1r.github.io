@@ -7,7 +7,7 @@
         <title>What C Actually Does With Your Struct - Padding, Alignment and Memory Layout - alem1r</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://alem1r.github.io/c-structs/">
   <meta property="og:site_name" content="alem1r">
   <meta property="og:title" content="What C Actually Does With Your Struct - Padding, Alignment and Memory Layout">
-  <meta property="og:description" content="Hugo theme - LoveIt">
+  <meta property="og:description" content="Many computer systems put alignment restrictions to simplify the design of the hardware between the processor and the memory. Such restrictions require that the address for some objects must be a multiple of some value V (typically 2,4, or 8). For example, suppose a processor always fetches 8 bytes from memory with an address that must be a multiple of 8. If we can guarantee that any double will be aligned to have its address be a multiple of 8, then the value can be read or written with a single memory operation. Otherwise, we may need to perform two memory accesses, since the object might be split across two 8-byte memory blocks and that impacts performances.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -18,7 +18,7 @@
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="What C Actually Does With Your Struct - Padding, Alignment and Memory Layout">
-  <meta name="twitter:description" content="Hugo theme - LoveIt">
+  <meta name="twitter:description" content="Many computer systems put alignment restrictions to simplify the design of the hardware between the processor and the memory. Such restrictions require that the address for some objects must be a multiple of some value V (typically 2,4, or 8). For example, suppose a processor always fetches 8 bytes from memory with an address that must be a multiple of 8. If we can guarantee that any double will be aligned to have its address be a multiple of 8, then the value can be read or written with a single memory operation. Otherwise, we may need to perform two memory accesses, since the object might be split across two 8-byte memory blocks and that impacts performances.">
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -33,7 +33,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/alem1r.github.io\/c-structs\/"
-        },"image": ["https:\/\/alem1r.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "C, Memory","wordcount":  0 ,
+        },"image": ["https:\/\/alem1r.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "C, Memory","wordcount":  1234 ,
         "url": "https:\/\/alem1r.github.io\/c-structs\/","datePublished": "2026-09-14T00:00:00+00:00","dateModified": "2026-09-14T00:00:00+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "xxxx","logo": "https:\/\/alem1r.github.io\/images\/avatar.png"},"author": {
@@ -107,15 +107,313 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">What C Actually Does With Your Struct - Padding, Alignment and Memory Layout</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Alessandro Miragliotta</a></span>&nbsp;<span class="post-category">included in <a href="/categories/c-language/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>C Language</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2026-09-14">2026-09-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;0 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;0 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2026-09-14">2026-09-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1234 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
                     <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
                 </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
-            </div><div class="content" id="content"></div><div class="post-footer" id="post-footer">
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#data-alignment-in-memory">Data Alignment in Memory</a>
+      <ul>
+        <li><a href="#aligned-vs-misaligned-access">Aligned vs Misaligned access</a>
+          <ul>
+            <li><a href="#aligned">Aligned</a></li>
+            <li><a href="#misaligned">Misaligned</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#structs-and-padding">Structs and Padding</a>
+      <ul>
+        <li><a href="#padding---rule-of-thumb">Padding - Rule of Thumb</a></li>
+        <li><a href="#assembly-and-memory-layout">Assembly and Memory Layout</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Many computer systems put <em>alignment restrictions</em> to simplify the design of the hardware between the processor and the memory. Such restrictions require that the address for some objects must be a multiple of some value <em>V</em> (typically 2,4, or 8). For example, suppose a processor always fetches 8 bytes from memory with an address that must be a multiple of 8. If we can guarantee that any <strong>double</strong> will be aligned to have its address be a multiple of 8, then the value can be read or written with a single memory operation. Otherwise, we may need to perform two memory accesses, since the object might be split across two 8-byte memory blocks and that impacts performances.</p>
+<h2 id="data-alignment-in-memory">Data Alignment in Memory</h2>
+<p>Every data type has a natural alignment requirement that depends on the processor architecture.</p>
+<p>For example, the following picture describes the bytes needed for each data type on most systems. It also shows that a pointer (in this case of type char) uses the full word size of the program.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/c-structs/data_types.png"
+        data-srcset="/c-structs/data_types.png, /c-structs/data_types.png 1.5x, /c-structs/data_types.png 2x"
+        data-sizes="auto"
+        alt="/c-structs/data_types.png"
+        title="alt text" width="462" height="427" /></p>
+<h3 id="aligned-vs-misaligned-access">Aligned vs Misaligned access</h3>
+<h4 id="aligned">Aligned</h4>
+<p>Suppose we want to store the 32-bit value:</p>
+<p><code>0xDEADBEEF</code></p>
+<p>A 32-bit value occupies 4 bytes. On a typical little-endian ARM/x86 system, memory contains:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Value: 0xDEADBEEF
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Bytes:
+</span></span><span style="display:flex;"><span>EF BE AD DE
+</span></span></code></pre></div><p>For a 32-bit (uint32_t) access, an address is naturally aligned when it is divisible by 4.</p>
+<p>For example, address <strong>0x1000</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>Address     Content
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x1000</span>      EF  <span style="color:#960050;background-color:#1e0010">←</span> start
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x1001</span>      BE
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x1002</span>      AD
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x1003</span>      DE
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">uint32_t</span> <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> (<span style="color:#66d9ef">uint32_t</span> <span style="color:#f92672">*</span>)<span style="color:#ae81ff">0x1000</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">*</span>p <span style="color:#960050;background-color:#1e0010">→</span> <span style="color:#ae81ff">0xDEADBEEF</span>
+</span></span></code></pre></div><p>Since:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>0x1000 % 4 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>the access is <strong>4-byte aligned</strong>.</p>
+<h4 id="misaligned">Misaligned</h4>
+<p>Now imagine the same value starts at <strong>0x1001</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>Address     Content
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x1000</span>      <span style="color:#f92672">??</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x1001</span>      EF  <span style="color:#960050;background-color:#1e0010">←</span> start
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x1002</span>      BE
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x1003</span>      AD
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x1004</span>      DE
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">uint32_t</span> <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> (<span style="color:#66d9ef">uint32_t</span> <span style="color:#f92672">*</span>)<span style="color:#ae81ff">0x1001</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">*</span>p <span style="color:#960050;background-color:#1e0010">→</span> <span style="color:#ae81ff">0xDEADBEEF</span>   <span style="color:#75715e">// if the CPU permits unaligned access
+</span></span></span></code></pre></div><p>But:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>0x1001 % 4 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p>so the 32-bit access is misaligned and what happens in memory is the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>             natural word <span style="color:#75715e">#1         natural word #2</span>
+</span></span><span style="display:flex;"><span>          ┌────────────────────┐  ┌────────────────────┐
+</span></span><span style="display:flex;"><span>Address   <span style="color:#ae81ff">1000</span>  <span style="color:#ae81ff">1001</span>  <span style="color:#ae81ff">1002</span>  <span style="color:#ae81ff">1003</span>  <span style="color:#ae81ff">1004</span>  <span style="color:#ae81ff">1005</span>  <span style="color:#ae81ff">1006</span>  <span style="color:#ae81ff">1007</span>
+</span></span><span style="display:flex;"><span>          ??    EF    BE    AD    DE    ??    ??    ??
+</span></span><span style="display:flex;"><span>                └─────────────────────┘
+</span></span><span style="display:flex;"><span>                  requested uint32_t
+</span></span></code></pre></div><p>On some CPUs, misaligned accesses work but may be slower; on others—or for certain ARM instructions/device-memory regions—they can generate an alignment fault/data abort.</p>
+<h2 id="structs-and-padding">Structs and Padding</h2>
+<p>Let&rsquo;s consider the following struct. Now, we are going to determine the offset of each field, the total size of the structure and its alignment for x86-64:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> S1 {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">short</span> i; 
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">int</span> c; 
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>j; 
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">short</span> <span style="color:#f92672">*</span>d;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  };
+</span></span></code></pre></div><p>Suppose the compiler used the minimal byte allocation, diagrammed as follows:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/c-structs/wrong-offset.png"
+        data-srcset="/c-structs/wrong-offset.png, /c-structs/wrong-offset.png 1.5x, /c-structs/wrong-offset.png 2x"
+        data-sizes="auto"
+        alt="/c-structs/wrong-offset.png"
+        title="alt text" width="1298" height="115" /></p>
+<p>Then it would be impossible to satisfy the 4-byte alignment requirement for field <strong>c</strong> (offset 2). Instead, the compiler inserts a 2-byte gap (shown here as <em>padding</em>) between fields i and c.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/c-structs/right-offset.png"
+        data-srcset="/c-structs/right-offset.png, /c-structs/right-offset.png 1.5x, /c-structs/right-offset.png 2x"
+        data-sizes="auto"
+        alt="/c-structs/right-offset.png"
+        title="alt text" width="1401" height="129" /></p>
+<p>So, Padding is the process of inserting unused bytes between members or at the end of a structure to satisfy alignment requirements.</p>
+<p>Without padding, some members would begin at misaligned addresses, reducing memory access efficiency.</p>
+<p>Indeed, if we run the following C program,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;The size of is %ld</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,<span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">struct</span> S1));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;The alignment is %ld</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,<span style="color:#a6e22e">alignof</span>(<span style="color:#66d9ef">struct</span> S1));
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;The offset of i is %ld</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,<span style="color:#a6e22e">offsetof</span>(<span style="color:#66d9ef">struct</span> S1, i));
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;The offset of c is %ld</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,<span style="color:#a6e22e">offsetof</span>(<span style="color:#66d9ef">struct</span> S1, c));
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;The offset of j is %ld</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,<span style="color:#a6e22e">offsetof</span>(<span style="color:#66d9ef">struct</span> S1, j));
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;The offset of d is %ld</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,<span style="color:#a6e22e">offsetof</span>(<span style="color:#66d9ef">struct</span> S1, d));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>we obtain:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>The size of is <span style="color:#ae81ff">24</span>
+</span></span><span style="display:flex;"><span>The alignment is <span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span>The offset of i is <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>The offset of c is <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>The offset of j is <span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span>The offset of d is <span style="color:#ae81ff">16</span>
+</span></span></code></pre></div><p>This is consistent because the total size is 24 bytes (where pointer d finishes) and the alignment of the struct is 8 because the <em>max(alignment_members) = 8</em>, the pointers.</p>
+<h3 id="padding---rule-of-thumb">Padding - Rule of Thumb</h3>
+<p>A simple algorithm that shows when inserting the padding is the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>current_offset <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> each member: 
+</span></span><span style="display:flex;"><span>  look at member alignment 
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> current offset is not divisible by alignment: 
+</span></span><span style="display:flex;"><span>    add padding <span style="color:#66d9ef">until</span> is 
+</span></span><span style="display:flex;"><span>  place member 
+</span></span><span style="display:flex;"><span>  current_offset <span style="color:#f92672">+=</span> member size
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>after all members:
+</span></span><span style="display:flex;"><span>  pad total size untile divisible by struct alignment
+</span></span></code></pre></div><p>Execution on Struct S1:</p>
+<ol>
+<li>Start</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>current_offset <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> 
+</span></span></code></pre></div><ol start="2">
+<li>Member <strong>short i</strong></li>
+</ol>
+<p>Alignment = 2
+Check:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#ae81ff">0</span> % 2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> 
+</span></span></code></pre></div><p>So no padding.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>offset 0-1 : i
+</span></span></code></pre></div><p>Update:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>current_offset <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> + 2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><ol start="3">
+<li>Member <strong>int c</strong></li>
+</ol>
+<p>Alignment = 4</p>
+<p>Current offset:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>current_offset <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><p>Check:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#ae81ff">2</span> % <span style="color:#ae81ff">4</span> !<span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> 
+</span></span></code></pre></div><p>So add padding until the offset is divisible by 4:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>offset <span style="color:#ae81ff">2</span> : padding
+</span></span><span style="display:flex;"><span>offset <span style="color:#ae81ff">3</span> : padding
+</span></span></code></pre></div><p>Now</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>current_offset <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4</span> % 4 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>Place <strong>c</strong> at offset 4.
+<strong>int</strong> occupies 4 bytes:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>offset 4-7 : c
+</span></span></code></pre></div><p>Update:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>current_offset <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span> + 4 <span style="color:#f92672">=</span> <span style="color:#ae81ff">8</span>
+</span></span></code></pre></div><ol start="4">
+<li>Member <strong><code>int *j</code></strong></li>
+</ol>
+<p>Pointer alignment = 8</p>
+<p>Current offset:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>current_offset <span style="color:#f92672">=</span> <span style="color:#ae81ff">8</span>
+</span></span></code></pre></div><p>Check:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#ae81ff">8</span> % 8 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> 
+</span></span></code></pre></div><p>So no padding.
+Place <strong>j</strong> at offset 8.
+Pointer occupies 8 bytes:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>offset 8-15 : j
+</span></span></code></pre></div><p>Update:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>current_offset <span style="color:#f92672">=</span> <span style="color:#ae81ff">8</span> + 8 <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>
+</span></span></code></pre></div><ol start="5">
+<li>Member <strong><code>short *d</code></strong></li>
+</ol>
+<p>Pointer alignment = 8</p>
+<p>Current offset:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>current_offset <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>
+</span></span></code></pre></div><p>Check:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#ae81ff">16</span> % 8 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> 
+</span></span></code></pre></div><p>So no padding.
+Place <strong>d</strong> at offset 16.
+Pointer occupies 8 bytes:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>offset 16-23 : j
+</span></span></code></pre></div><p>Update:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>current_offset <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span> + 8 <span style="color:#f92672">=</span> <span style="color:#ae81ff">24</span>
+</span></span></code></pre></div><h3 id="assembly-and-memory-layout">Assembly and Memory Layout</h3>
+<p>Life can be easier if we let the compiler handle it for us, in particular by using <strong>Clang</strong> we can see directly the layout:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>clang -Xclang -fdump-record-layouts -c layout.c
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>*** Dumping AST Record Layout
+</span></span><span style="display:flex;"><span>         <span style="color:#ae81ff">0</span> | struct P1
+</span></span><span style="display:flex;"><span>         <span style="color:#ae81ff">0</span> |   short i
+</span></span><span style="display:flex;"><span>         <span style="color:#ae81ff">4</span> |   int c
+</span></span><span style="display:flex;"><span>         <span style="color:#ae81ff">8</span> |   int * j
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">16</span> |   short * d
+</span></span><span style="display:flex;"><span>           | <span style="color:#f92672">[</span>sizeof<span style="color:#f92672">=</span>24, align<span style="color:#f92672">=</span>8<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>Exactly what we previously computed!</p>
+<p>If we look to the assembly we can have a deeper understanding:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gcc -O2 -S -masm<span style="color:#f92672">=</span>intel layout.c -o layout.s
+</span></span></code></pre></div><pre tabindex="0"><code class="language-assembly" data-lang="assembly">	.intel_syntax noprefix
+	.text
+	.section	.rodata.str1.1,&#34;aMS&#34;,@progbits,1
+.LC0:
+	.string	&#34;size of is %ld\n&#34;
+.LC1:
+	.string	&#34;the alignment is %ld\n&#34;
+.LC2:
+	.string	&#34;the offset of i is %ld\n&#34;
+.LC3:
+	.string	&#34;the offset of c is %ld\n&#34;
+.LC4:
+	.string	&#34;the offset of j is %ld\n&#34;
+.LC5:
+	.string	&#34;the offset of d is %ld\n&#34;
+	.section	.text.startup,&#34;ax&#34;,@progbits
+	.p2align 4
+	.globl	main
+	.type	main, @function
+main:
+.LFB39:
+	.cfi_startproc
+	endbr64
+	sub	rsp, 8
+	.cfi_def_cfa_offset 16
+	mov	edx, 24
+	mov	edi, 1
+	xor	eax, eax
+	lea	rsi, .LC0[rip]
+	call	__printf_chk@PLT
+	mov	edx, 8
+	lea	rsi, .LC1[rip]
+	xor	eax, eax
+	mov	edi, 1
+	call	__printf_chk@PLT
+	xor	edx, edx
+	lea	rsi, .LC2[rip]          //offset of i is 0
+	xor	eax, eax
+	mov	edi, 1
+	call	__printf_chk@PLT
+	mov	edx, 4
+	lea	rsi, .LC3[rip]         //offset of c is 4
+	xor	eax, eax
+	mov	edi, 1
+	call	__printf_chk@PLT
+	mov	edx, 8
+	lea	rsi, .LC4[rip]         //offset of j is 8
+	xor	eax, eax
+	mov	edi, 1
+	call	__printf_chk@PLT
+	mov	edx, 16
+	lea	rsi, .LC5[rip]         //offset of d is 16
+	xor	eax, eax
+	mov	edi, 1
+	call	__printf_chk@PLT
+	xor	eax, eax
+	add	rsp, 8
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE39:
+	.size	main, .-main
+	.ident	&#34;GCC: (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0&#34;
+	.section	.note.GNU-stack,&#34;&#34;,@progbits
+	.section	.note.gnu.property,&#34;a&#34;
+	.align 8
+	.long	1f - 0f
+	.long	4f - 1f
+	.long	5
+0:
+	.string	&#34;GNU&#34;
+1:
+	.align 8
+	.long	0xc0000002
+	.long	3f - 2f
+2:
+	.long	0x3
+3:
+	.align 8
+4:
+</code></pre><p>In the generated assembly, the structure layout can be identified by matching each <strong>lea</strong> instruction, which loads the corresponding format string, with the preceding <strong>mov</strong> instruction, which places the compile-time value of <strong>sizeof</strong>, <strong>_Alignof</strong>, or <strong>offsetof</strong> into the argument register. For example, <strong>mov edx, 4</strong> followed by <strong>lea rsi, .LC3[rip]</strong> shows that the offset of member <strong>c</strong> is 4 bytes. Similarly, <strong>mov edx, 8</strong> before the alignment message shows that the structure alignment is <strong>8 bytes</strong>.</p>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

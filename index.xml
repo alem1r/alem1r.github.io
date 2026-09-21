@@ -11,7 +11,7 @@
     <pubDate>Mon, 14 Sep 2026 00:00:00 &#43;0000</pubDate>
     <author>Alessandro Miragliotta</author>
     <guid>https://alem1r.github.io/c-structs/</guid>
-    <description><![CDATA[]]></description>
+    <description><![CDATA[<p>Many computer systems put <em>alignment restrictions</em> to simplify the design of the hardware between the processor and the memory. Such restrictions require that the address for some objects must be a multiple of some value <em>V</em> (typically 2,4, or 8). For example, suppose a processor always fetches 8 bytes from memory with an address that must be a multiple of 8. If we can guarantee that any <strong>double</strong> will be aligned to have its address be a multiple of 8, then the value can be read or written with a single memory operation. Otherwise, we may need to perform two memory accesses, since the object might be split across two 8-byte memory blocks and that impacts performances.</p>]]></description>
 </item>
 </channel>
 </rss>
